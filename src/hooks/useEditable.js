@@ -1,8 +1,7 @@
-import { useLocation } from 'react-router-dom'
+import { useMatch } from 'react-router-dom'
 
 const useEditable = () => {
-  const { pathname } = useLocation()
-  return pathname === '/create'
+  return useMatch('/quiz')
 }
 
 export default useEditable

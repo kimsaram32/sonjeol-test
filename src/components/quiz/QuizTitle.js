@@ -8,25 +8,36 @@ import { useQuizDispatch } from '../../QuizContext'
 import useEditable from '../../hooks/useEditable'
 
 const StyledTitle = styled.div`
-  position: relative;
   font-size: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #bbb;
 
   p {
+    position: relative;
     width: 80%;
     margin: auto;
     text-align: center;
   }
 
   .icon-edit {
+    width: 20px;
+    height: 20px;
     position: absolute;
     top: 0;
     bottom: 0;
     margin: auto;
-    right: 0;
+    right: -30px;
+    cursor: pointer;
+    color: #444;
   }
 
   input {
     font-size: 20px;
+    color: ${(props) => props.theme.main};
+
+    &:focus {
+      outline: none;
+    }
   }
 `
 
@@ -38,9 +49,9 @@ const QuizTitle = React.memo(({ quiz }) => {
   const onInputChange = ({ target: { value } }) => {
     if (value.length <= 20) {
       dispatch({
-        type: 'EDIT_QUESTION',
+        type: 'EDIT_TITLE',
         id: quiz.id,
-        question: value
+        title: value
       })
     }
   }
@@ -52,16 +63,20 @@ const QuizTitle = React.memo(({ quiz }) => {
           <form onSubmit={onSubmit}>
             <EditingInput
               onChange={onInputChange}
-              value={quiz.question}
+              value={quiz.title}
             ></EditingInput>
           </form>
         </>
       ) : (
         <>
           <p>
-            {quiz.question}
+            {quiz.title}
             {editable && (
-              <VerticalAlignedIcon size="20px" className="icon-edit" onClick={toggleEditing}>
+              <VerticalAlignedIcon
+                size="20px"
+                className="icon-edit"
+                onClick={toggleEditing}
+              >
                 <FaEdit />
               </VerticalAlignedIcon>
             )}

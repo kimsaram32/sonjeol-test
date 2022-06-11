@@ -10,13 +10,21 @@ const StyledButton = styled.button`
   position: relative;
   width: 100%;
   height: 40px;
-  border: 0;
-  border-radius: 10px;
+  background-color: white;
+  color: #444;
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+  }
 `
 
 const BottomIcon = ({ onClick, size, icon }) => (
-  <StyledButton onClick={onClick}>
-    <CenterAlignedIcon size={size}>{icon}</CenterAlignedIcon>
+  <StyledButton className="btn" onClick={onClick}>
+    <CenterAlignedIcon className="icon" size={size}>{icon}</CenterAlignedIcon>
   </StyledButton>
 )
 

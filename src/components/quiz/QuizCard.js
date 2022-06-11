@@ -1,14 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import QuizTitle from './QuizTitle'
-import AnswerList from './AnswerList'
+import AnswerList from './answer/AnswerList'
 import BottomButtons from './QuizBottomButtons'
 import useEditable from '../../hooks/useEditable'
 
 const StyledCard = styled.div`
   margin: 20px 0;
   width: 100%;
-  background-color: lightgray;
+  background-color: #eee;
+  border: 2px solid #bbb;
   border-radius: 30px;
   padding: 40px 55px;
   text-align: center;

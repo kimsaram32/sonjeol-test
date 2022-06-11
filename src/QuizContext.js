@@ -1,42 +1,29 @@
 import React, { createContext, useReducer, useContext } from 'react'
 
 const initialState = {
-  quizzes: [
-    {
-      id: 0,
-      question: '생일이 언제인가요',
-      answers: [
-        { id: 0, text: '1월' },
-        { id: 1, text: '2월' },
-        { id: 2, text: '3월' },
-        { id: 3, text: '4월' },
-        { id: 4, text: '5월' },
-        { id: 5, text: '6월' },
-        { id: 6, text: '7월' },
-        { id: 7, text: '8월' },
-        { id: 8, text: '9월' },
-        { id: 9, text: '10월' },
-        { id: 10, text: '11월' },
-        { id: 11, text: '12월' }
-      ],
-      correctAnswer: -1
-    },
-    {
-      id: 1,
-      question: '우왕ㄹㄹ',
-      answers: [
-        { id: 0, text: '테스트1' },
-        { id: 1, text: '테스트2' },
-        { id: 2, text: '테스트3' },
-        { id: 3, text: '테스트4' }
-      ],
-      correctAnswer: -1
-    }
-  ]
+  quizzes: [],
+  test: {
+    creatorName: '',
+    progress: 0,
+    clickedAnswer: -1,
+    correctAnswerCount: 0,
+    answerVisible: false
+  },
+  nickname: '익명'
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_NICKNAME':
+      return {
+        ...state,
+        nickname: action.nickname
+      }
+    case 'SET_QUIZZES':
+      return {
+        ...state,
+        quizzes: action.quizzes
+      }
     case 'ADD_QUIZ':
       return {
         ...state,
@@ -44,7 +31,7 @@ const reducer = (state, action) => {
           ...state.quizzes,
           {
             id: action.id,
-            question: '질문 입력',
+            title: '질문 입력',
             answers: [{ id: 0, text: '정답 입력' }],
             correctAnswer: -1
           }
@@ -55,7 +42,7 @@ const reducer = (state, action) => {
         ...state,
         quizzes: state.quizzes.filter((quiz) => quiz.id !== action.id)
       }
-    case 'EDIT_QUESTION':
+    case 'EDIT_TITLE':
       return {
         ...state,
         quizzes: [
@@ -63,7 +50,7 @@ const reducer = (state, action) => {
             quiz.id === action.id
               ? {
                   ...quiz,
-                  question: action.question
+                  title: action.title
                 }
               : quiz
           )
@@ -130,10 +117,66 @@ const reducer = (state, action) => {
           quiz.id === action.id
             ? {
                 ...quiz,
-                correctAnswer: action.correctAnswer
+                correctAnswer: action.answer
               }
             : quiz
         )
+      }
+    case 'SET_TEST_CREATOR':
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          creatorName: action.name
+        }
+      }
+    case 'SET_TEST_PROGRESS':
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          progress: action.progress
+        }
+      }
+    case 'INCREASE_TEST_PROGRESS':
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          progress: state.test.progress + 1
+        }
+      }
+    case 'SET_TEST_CLICKED_ANSWER':
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          clickedAnswer: action.answer
+        }
+      }
+    case 'SET_TEST_ANSWER_VISIBLE':
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          answerVisible: action.visible
+        }
+      }
+    case 'SET_CORRECT_ANSWER_COUNT':
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          correctAnswerCount: action.count
+        }
+      }
+    case 'INCREASE_CORRECT_ANSWER_COUNT':
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          correctAnswerCount: state.test.correctAnswerCount + 1
+        }
       }
     default:
       throw new Error(`Unhandled action type ${action.type}`)
