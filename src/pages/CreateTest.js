@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuizDispatch } from '../QuizContext'
@@ -18,21 +18,30 @@ const CreateTest = () => {
   const [searchParams] = useSearchParams()
   const templateKey = searchParams.get('template') ?? 'basic'
   const dispatch = useQuizDispatch()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     dispatch({ type: 'SET_QUIZZES', quizzes: templates[templateKey] })
-  })
+    setLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="container">
       <QuizContainer>
-        <TestHeader>퀴즈 만들기</TestHeader>
-        <NicknameInput />
-        <QuizList />
-        <BottomButtons />
-        <p style={{ marginTop: '15px', color: '#333' }}>
-          $는 사용자 이름으로 대체됩니다.
-        </p>
+        {loading ? (
+          '로딩중'
+        ) : (
+          <>
+            <TestHeader>퀴즈 만들기</TestHeader>
+            <NicknameInput />
+            <QuizList />
+            <BottomButtons />
+            <p style={{ marginTop: '15px', color: '#333' }}>
+              $는 사용자 이름으로 대체됩니다.
+            </p>
+          </>
+        )}
       </QuizContainer>
     </div>
   )
