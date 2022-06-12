@@ -15,7 +15,7 @@ const templateList = [
     key: 'basic'
   },
   {
-    title: '호불호',
+    title: '호불호 + 밈',
     desc: '우리는 한국인이니까 한국식 문제로도 해봅시다.',
     key: 'likes'
   }

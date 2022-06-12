@@ -47,7 +47,7 @@ const QuizTitle = React.memo(({ quiz }) => {
   const editable = useEditable()
 
   const onInputChange = ({ target: { value } }) => {
-    if (value.length <= 20) {
+    if (value.length <= 30) {
       dispatch({
         type: 'EDIT_TITLE',
         id: quiz.id,
